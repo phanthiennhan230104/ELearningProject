@@ -10,6 +10,7 @@
 - ⚙️ Trang quản trị: Quản lý người dùng, khóa học, môn học
 
 ## ⚙️ Yêu cầu hệ thống (pip install ...)
+<pre>
 Python >= 3.8
 MySQL >= 5.7
 pip install Django==5.2.3
@@ -19,7 +20,7 @@ pip install django-widget-tweaks==1.5.0 # Tuỳ chỉnh form HTML
 pip install requests==2.32.3
 pip install pillow==11.1.0              # Xử lý ảnh (nếu có upload ảnh)
 pip install openai==1.90.0
-pip install groq==0.29.0
+pip install groq==0.29.0</pre>
 🔁 Hoặc dùng file requirements.txt:
 pip install -r requirements.txt
 
@@ -29,6 +30,7 @@ pip install -r requirements.txt
 Xử lí để kết nối database MySQL:
 - import file elearning.sql trong Folder database
 - Mở file settings.py và chỉnh cấu hình: ( ở USER và PASSWORD chỉnh sửa theo MySQL của máy)
+<pre>
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -38,7 +40,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     }
-}
+}</pre>
 
 ## 🔐 Tài khoản mẫu
 | Vai trò       | Tài khoản| Mật khẩu     |
@@ -48,7 +50,7 @@ DATABASES = {
 | Sinh viên     | hs1      | hs2004       |
 
 ## 📁 Cấu trúc thư mục
-<pre> ``` pythonproject/
+<pre>pythonproject/
 ├── admin/                    # Chức năng cho admin
 ├── ai/                       # Module xử lý AI / Chatbot
 ├── authentication/          # Đăng nhập, đăng ký, phân quyền
@@ -87,11 +89,12 @@ DATABASES = {
 ├── .env                     # Biến môi trường (KHÔNG push lên GitHub)
 ├── .gitignore
 ├── manage.py
-├── requirements.txt ``` </pre>
+├── requirements.txt</pre>
 
 ## RUN SERVER
+<pre>
 python manage.py runserver
-Mở trình duyệt: http://127.0.0.1:8000
+Mở trình duyệt: http://127.0.0.1:8000</pre>
 
 ## 🤝 Đóng góp
 Mọi đóng góp đều được chào đón. Vui lòng mở issue hoặc gửi pull request.
