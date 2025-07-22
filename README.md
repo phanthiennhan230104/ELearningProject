@@ -48,7 +48,7 @@ DATABASES = {
 | Sinh viên     | hs1      | hs2004       |
 
 ## 📁 Cấu trúc thư mục
-pythonproject/
+<pre> ``` pythonproject/
 ├── admin/                    # Chức năng cho admin
 ├── ai/                       # Module xử lý AI / Chatbot
 ├── authentication/          # Đăng nhập, đăng ký, phân quyền
@@ -87,7 +87,7 @@ pythonproject/
 ├── .env                     # Biến môi trường (KHÔNG push lên GitHub)
 ├── .gitignore
 ├── manage.py
-├── requirements.txt
+├── requirements.txt ``` </pre>
 
 ## RUN SERVER
 python manage.py runserver
