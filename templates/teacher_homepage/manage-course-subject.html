@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/manage-course-subject.css" />
+    <title>Hệ Thống Học Tập PERL & PYTHON | CS466 - DTU</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                             <img src="/static/img/logo.png" alt="Logo">
+                        </div>
+                        <div class="inner-menu collapse-menu">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'authentication:teacher_homepage' %}">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile'}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-mobile">
+                            <i class="fa-solid fa-bars"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Menu Mobile -->
+    <!-- Content -->
+    <div class="container my-5">
+        <a href="{% url 'mainapp:back' %}" class="back-button">← Back</a>
+        <h2 class="text-center mb-5">COURSES MANAGEMENT</h2>
+
+        <ul class = "link-page">
+            <li>
+                <a href="/teacher/manage-course-subject/">Courses Management</a>
+            </li>
+            <li>
+                <a href="/teacher/course-subject-lesson/">Lessons Management</a>
+            </li>
+        </ul>
+
+        <!-- SUBJECT SECTION -->
+        <div class="mb-5">
+            <h4 class="mb-3 font-weight-bold">SUBJECT</h4>
+            <!-- SUBJECT FORM -->
+            <form id="subject-form" class="mb-4">
+                <input type="hidden" id="subject-id">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input type="text" id="subject-title" class="form-control bg-light" placeholder="Enter subject title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="subject-desc" class="form-control bg-light" rows="3" placeholder="Enter subject description"></textarea>
+                </div>
+                <button type="submit" id="add-btn" class="btn btn-success">ADD</button>
+                <button type="button" id="update-btn" class="btn btn-primary" style="display:none;">UPDATE</button>
+            </form>
+        <h5>Subject List:</h5>
+        <table class="table table-bordered table-striped bg-light">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Feature</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in subjects %}
+                    <tr>
+                        <td>{{ subject.subject_id }}</td>
+                        <td>{{ subject.name }}</td>
+                        <td>{{ subject.desc }}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm update-subject-btn"
+                                data-id="{{ subject.subject_id }}"
+                                data-name="{{ subject.name }}"
+                                data-desc="{{ subject.desc }}">Update</button>
+                            <button class="btn btn-danger btn-sm delete-subject-btn"
+                                    data-id="{{ subject.subject_id }}">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- COURSE SECTION -->
+    <div class="mb-5">
+        <h4 class="mb-3 font-weight-bold">COURSE</h4>
+           <!-- COURSE FORM -->
+            <form class="mb-4" id="course-form">
+                <input type="hidden" id="course-id">
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input type="text" id="course-title" class="form-control bg-light" placeholder="Enter course title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="course-desc" class="form-control bg-light" rows="3" placeholder="Enter course description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Year:</label>
+                    <input type="number" id="course-year" class="form-control bg-light" placeholder="Enter year" required>
+                </div>
+                <button type="submit" id="add-course-btn" class="btn btn-success">ADD</button>
+                <button type="button" id="update-course-btn" class="btn btn-primary" style="display:none;">UPDATE</button>
+            </form>
+            <h5>Course List:</h5>
+            <table class="table table-bordered table-striped bg-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Year</th>
+                        <th>Created Date</th>
+                        <th>Feature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                        <tr>
+                            <td>{{ course.course_id }}</td>
+                            <td>{{ course.title }}</td>
+                            <td>{{ course.description }}</td>
+                            <td>{{ course.year }}</td>
+                            <td>{{ course.created_date|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm update-course-btn"
+                                    data-id="{{ course.course_id }}"
+                                    data-title="{{ course.title }}"
+                                    data-desc="{{ course.description }}"
+                                    data-year="{{ course.year }}">Update</button>
+
+                                <button class="btn btn-danger btn-sm delete-course-btn"
+                                    data-id="{{ course.course_id }}">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addBtn = document.getElementById('add-btn');
+            const updateBtn = document.getElementById('update-btn');
+            const titleInput = document.getElementById('subject-title');
+            const descInput = document.getElementById('subject-desc');
+            const idInput = document.getElementById('subject-id');
+            const form = document.getElementById('subject-form');
+
+            // Hàm lấy CSRF token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            // Mặc định: ấn ADD sẽ thêm mới
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const name = titleInput.value;
+                const desc = descInput.value;
+
+                fetch("{% url 'teacher:add-subject' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ name: name, desc: desc })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            // Khi click nút UPDATE trong bảng
+            document.querySelectorAll('.update-subject-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const name = this.getAttribute('data-name');
+                    const desc = this.getAttribute('data-desc');
+
+                    // Đổ dữ liệu vào form
+                    idInput.value = id;
+                    titleInput.value = name;
+                    descInput.value = desc;
+
+                    // Đổi nút
+                    addBtn.style.display = 'none';
+                    updateBtn.style.display = 'inline-block';
+                });
+            });
+
+            // Khi ấn nút UPDATE
+            updateBtn.addEventListener('click', function () {
+                const id = idInput.value;
+                const name = titleInput.value;
+                const desc = descInput.value;
+
+                fetch(`/teacher/update-subject/${id}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ name: name, desc: desc })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload();
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            // Gán sự kiện xoá
+            document.querySelectorAll('.delete-subject-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    if (confirm("Are you sure you want to delete this subject?")) {
+                        console.log('Deleting subject with id:', id);
+                        fetch(`/teacher/delete-subject/${id}/`, {
+                            method: 'POST', // bạn đang xử lý POST trong view
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            }
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Network error');
+                            return response.json();
+                        })
+                        .then(data => {
+                            alert(data.message);
+                            location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Delete error:', error);
+                            alert('Error deleting subject!');
+                        });
+                    }
+                });
+            });
+
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addBtn = document.getElementById('add-course-btn');
+            const updateBtn = document.getElementById('update-course-btn');
+            const titleInput = document.getElementById('course-title');
+            const descInput = document.getElementById('course-desc');
+            const yearInput = document.getElementById('course-year');
+            const idInput = document.getElementById('course-id');
+
+            //Hàm lấy CSRF Token
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            //Thêm mới Course
+            addBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const title = titleInput.value;
+                const description = descInput.value;
+                const year = yearInput.value;
+                const teacherId = localStorage.getItem('teacher_id');
+
+                if (!teacherId) {
+                    alert('Teacher ID not found in localStorage!');
+                    return;
+                }
+
+                fetch("{% url 'teacher:add-course' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: description,
+                        year: year,
+                        teacher_id: teacherId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    if (data.message) location.reload();
+                })
+                .catch(error => console.error('Add Error:', error));
+            });
+
+            //Khi click nút "Update" ở table
+            document.querySelectorAll('.update-course-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    const title = this.getAttribute('data-title');
+                    const desc = this.getAttribute('data-desc');
+                    const year = this.getAttribute('data-year');
+
+                    // Đổ dữ liệu lên form
+                    idInput.value = id;
+                    titleInput.value = title;
+                    descInput.value = desc;
+                    yearInput.value = year;
+
+                    // Chuyển nút
+                    addBtn.style.display = 'none';
+                    updateBtn.style.display = 'inline-block';
+                });
+            });
+
+            //Khi click nút UPDATE trong form
+            updateBtn.addEventListener('click', function () {
+                const id = idInput.value;
+                const title = titleInput.value;
+                const desc = descInput.value;
+                const year = yearInput.value;
+
+                fetch(`/teacher/update-course/${id}/`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        description: desc,
+                        year: year
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    if (data.message) location.reload();
+                })
+                .catch(error => console.error('Update Error:', error));
+            });
+
+            // Gán sự kiện xoá course
+            document.querySelectorAll('.delete-course-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+                    if (confirm("Are you sure you want to delete this course?")) {
+                        fetch(`/teacher/delete-course/${id}/`, {
+                            method: 'POST',  // vì view đang xử lý POST
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message || data.error);
+                            if (data.message) location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Delete error:', error);
+                            alert('An error occurred while deleting the course  !');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="/static/css/course-subject-lesson.css" />
+    <title>Hệ Thống Học Tập PERL & PYTHON | CS466 - DTU</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                            <img src="/static/img/logo.png" alt="Logo">
+                        </div>
+                        <div class="inner-menu collapse-menu">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'authentication:teacher_homepage' %}">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-mobile">
+                            <i class="fa-solid fa-bars"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Menu Mobile -->
+    <!-- Content -->
+    <div class="container my-5">
+        <a href="{% url 'mainapp:back' %}" class="back-button">← Back</a>
+        <h2 class="text-center mb-5">COURSE - SUBJECT & LESSON MANAGEMENT</h2>
+
+        <ul class = "link-page">
+            <li>
+                <a href="/teacher/manage-course-subject/">Courses Management</a>
+            </li>
+            <li>
+                <a href="/teacher/course-subject-lesson/">Lessons Management</a>
+            </li>
+        </ul>
+
+        <!-- COURSE ↔ SUBJECT SECTION -->
+        <div class="mb-5">
+            <h4 class="mb-3 font-weight-bold">COURSE - SUBJECT</h4>
+            <form class="mb-4" id="course-subject-form">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <!-- Select Course -->
+                        <label>Select Course:</label>
+                        <select name="course" id="select-course" class="form-control bg-light">
+                            <option value="">-- Select Course --</option>
+                            {% for course in courses %}
+                                <option value="{{ course.course_id }}">{{ course.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <!-- Select Subject -->
+                        <label>Select Subject:</label>
+                        <select name="subject" id="select-subject" class="form-control bg-light">
+                            <option value="">-- Select Subject --</option>
+                            {% for subject in subjects %}
+                                <option value="{{ subject.subject_id }}">{{ subject.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Link</button>
+            </form>
+
+            <h5>Course ↔ Subject List:</h5>
+            <table class="table table-bordered table-striped bg-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Course</th>
+                        <th>Subject</th>
+                        <th>Feature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cs in course_subjects %}
+                        <tr>
+                            <td>{{ cs.course_sub_id }}</td>
+                            <td>{{ cs.course.title }}</td>
+                            <td>{{ cs.subject.name }}</td>
+                            <td>
+                            <button class="btn btn-danger btn-sm delete-course-subject-btn"
+                                    data-id="{{ cs.course_sub_id }}">Delete</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- LESSONS SECTION -->
+        <div class="mb-5">
+            <h4 class="mb-3 font-weight-bold">LESSONS</h4>
+            <form class="mb-4" id="lesson-form">
+                <div class="form-group">
+                    <label>Select Course ↔ Subject:</label>
+                    <select name="course_sub_id" id="select-course-subject" class="form-control bg-light">
+                        <option value="">-- Select Course - Subject --</option>
+                        {% for cs in course_subjects %}
+                            <option value="{{ cs.course_sub_id }}">
+                                {{ cs.course.title }} ↔ {{ cs.subject.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Title:</label>
+                    <input type="text" id="lesson-title" class="form-control bg-light" placeholder="Enter lesson title">
+                </div>
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="lesson-desc" class="form-control bg-light" rows="2" placeholder="Enter lesson description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Content:</label>
+                    <textarea id="lesson-content" class="form-control bg-light" rows="4" placeholder="Lesson content..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">ADD</button>
+                <button type="button" id="update-btn" class="btn btn-primary" style="display:none;">UPDATE</button>
+            </form>
+
+
+            <h5>Lesson List:</h5>
+            <table class="table table-bordered table-striped bg-light">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Course ↔ Subject</th>
+                        <th>Description</th>
+                        <th>Feature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lesson in lessons %}
+                    <tr>
+                        <td>{{ lesson.lesson_id }}</td>
+                        <td>{{ lesson.title }}</td>
+                        <td>{{ lesson.course_sub.course.title }} ↔ {{ lesson.course_sub.subject.name }}</td>
+                        <td>{{ lesson.description }}</td>
+                        <td>
+                            <a href="{% url 'teacher:update-lesson' lesson.lesson_id %}" class="btn btn-primary btn-sm">Update</a>
+                            <button class="btn btn-danger btn-sm delete-lesson-btn"
+                                    data-id="{{ lesson.lesson_id }}">
+                                Delete
+                            </button>
+
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('course-subject-form');
+            const courseSelect = document.getElementById('select-course');
+            const subjectSelect = document.getElementById('select-subject');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const courseId = courseSelect.value;
+                const subjectId = subjectSelect.value;
+
+                if (!courseId || !subjectId) {
+                    alert('Vui lòng chọn cả Course và Subject.');
+                    return;
+                }
+
+                fetch("{% url 'teacher:link-course-subject' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        course_id: courseId,
+                        subject_id: subjectId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    if (data.message) location.reload();
+                })
+                .catch(error => {
+                    console.error('Link error:', error);
+                    alert('Lỗi khi liên kết Course và Subject');
+                });
+            });
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteBtns = document.querySelectorAll('.delete-course-subject-btn');
+
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const id = this.getAttribute('data-id');
+
+                    if (!confirm('Bạn có chắc chắn muốn xoá liên kết này?')) return;
+
+                    fetch(`/teacher/delete-course-subject/${id}/`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        if (data.message) location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Delete error:', error);
+                        alert('Lỗi khi xoá liên kết Course ↔ Subject');
+                    });
+                });
+            });
+
+            // Hàm lấy CSRF token (nếu chưa có)
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('lesson-form');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const courseSubId = document.getElementById('select-course-subject').value;
+                const title = document.getElementById('lesson-title').value;
+                const desc = document.getElementById('lesson-desc').value;
+                const content = document.getElementById('lesson-content').value;
+
+                if (!courseSubId || !title) {
+                    alert('Vui lòng chọn liên kết và nhập tiêu đề!');
+                    return;
+                }
+
+                fetch("{% url 'teacher:add-lesson' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        course_sub_id: courseSubId,
+                        title: title,
+                        description: desc,
+                        content: content
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message || data.error);
+                    if (data.message) location.reload();
+                })
+                .catch(err => {
+                    console.error('Error:', err);
+                    alert('Lỗi khi thêm bài học!');
+                });
+
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteLessonBtns = document.querySelectorAll('.delete-lesson-btn');
+
+            deleteLessonBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const lessonId = this.getAttribute('data-id');
+
+                    if (!confirm('Bạn có chắc chắn muốn xoá bài học này?')) return;
+
+                    fetch(`/teacher/delete-lesson/${lessonId}/`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken')
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                        if (data.message) location.reload();
+                    })
+                    .catch(err => {
+                        console.error('Delete error:', err);
+                        alert('Lỗi khi xoá bài học!');
+                    });
+                });
+            });
+
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+</body>
+</html>

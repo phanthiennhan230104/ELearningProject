@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/homepage-hs.css' %}">
+    <title>E-LEARNING</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                            <img src="https://scontent-hkg1-2.xx.fbcdn.net/v/t1.15752-9/509617644_1412222906577794_4739279048360180404_n.png?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=93bp-KCXyKIQ7kNvwGfnJZD&_nc_oc=AdkReJIhOEZUQUi038njdwsrihij8JneijTW7hbgvPYz_XS_gyfgXAO1zEfPFwZGZKOk6KxENOV5l8ezFkdMVruG&_nc_zt=23&_nc_ht=scontent-hkg1-2.xx&oh=03_Q7cD2gGUg1JEd2OLigqSAUc9v_NRJzkax7WaNG01NkhIyoARKA&oe=688410C3" alt="Logo">
+                        </div>
+                        <div class="inner-menu">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:back' %}">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container text-center my-5">
+        <h1 class="text-center">E-LEARNING</h1>
+        <div class="grid-container">
+            <a href="{% url 'student:learning' %}" style="text-decoration: none; color: inherit;">
+            <div class="feature-card">   
+                <div class="feature-icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="PDF Icon" style="width: 50px; height: 50px;">
+                </div>
+                <h3>Learning</h3>
+                <p>
+                    Lecture content is organized by topic, allowing students to easily follow, study, and review knowledge.
+                </p>
+            </div> 
+            </a>
+
+            <a href="{% url 'student:practice' %}" style="text-decoration: none; color: inherit;">
+            <div class="feature-card">   
+                <div class="feature-icon">
+                    <img src="https://i.postimg.cc/2jZfPrzZ/practice-png.png" alt="Practice Icon" style="width: 50px; height: 50px;">
+                </div>
+                <h3>Practice</h3>
+                <p>
+                    A variety of practical exercises help reinforce theoretical knowledge and enhance problem-solving skills.
+                </p>
+            </div>
+            </a>
+
+            <a href="{% url 'student:quizAI' %}" style="text-decoration: none; color: inherit;">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="/static/img/quiz.png" alt="Quizzes AI-Generated" style="width: 50px; height: 50px;">
+                </div>
+                <h3>AI-Generated Practice Quizzes</h3>
+                <p>
+                    Automatically generate customized practice quizzes using AI based on course content or user input. This feature helps students reinforce knowledge, identify weaknesses, and prepare for exams effectively.
+                </p>
+            </div>
+            </a>
+
+            <a href="{% url 'student:ide' %}" style="text-decoration: none; color: inherit;">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <img src="https://i.postimg.cc/fyxpkWLq/learning.png" alt="Editor Icon" style="width: 50px; height: 50px;">
+                </div>
+                <h3>Online IDE</h3>
+                <p>
+                    Allows students to write, run, and test code directly on the platform without needing to install any software.
+                </p>
+            </div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

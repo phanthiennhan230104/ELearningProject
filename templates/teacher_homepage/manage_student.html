@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/manage_student.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                            <img src="https://scontent-hkg1-2.xx.fbcdn.net/v/t1.15752-9/509617644_1412222906577794_4739279048360180404_n.png?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=93bp-KCXyKIQ7kNvwGfnJZD&_nc_oc=AdkReJIhOEZUQUi038njdwsrihij8JneijTW7hbgvPYz_XS_gyfgXAO1zEfPFwZGZKOk6KxENOV5l8ezFkdMVruG&_nc_zt=23&_nc_ht=scontent-hkg1-2.xx&oh=03_Q7cD2gGUg1JEd2OLigqSAUc9v_NRJzkax7WaNG01NkhIyoARKA&oe=688410C3" alt="Logo">
+                        </div>
+                        <div class="inner-menu">
+                            <ul>
+                                <li>
+                                    <a href="% url 'authentication:teacher_homepage' %">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+
+        <h1 class="text-center mb-5">STUDENT MANAGEMENT</h1>
+
+        <div class="content-box">
+            <form method="get" action="" class="filters">
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <!-- Ô nhập tên -->
+                    <div>
+                        <label for="search">Enter name</label><br>
+                        <input type="text" id="search" name="search" placeholder="Enter name..."
+                            value="{{ search_query }}" class="form-control">
+                    </div>
+
+                    <!-- Nút Search (di chuyển vào giữa) -->
+                    <div>
+                        <label>&nbsp;</label><br> <!-- giữ nút cùng độ cao với label -->
+                        <button type="submit" class="btn btn-info">Search</button>
+                    </div>
+
+                    <!-- Combobox Course -->
+                    <div>
+                        <label for="course_id">Course</label><br>
+                        <select name="course_id" id="course_id" class="form-control" onchange="this.form.submit()">
+                            <option value="">-- All Courses --</option>
+                            {% for course in courses %}
+                            <option value="{{ course.course_id }}" {% if course.course_id == selected_course_id %}
+                                selected {% endif %}>
+                                {{ course.title }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+
+
+            <div class="table-section">
+                <h4>STUDENT LIST:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ student.user_id }}</td>
+                            <td>{{ student.profile.fullname|default:student.username }}</td>
+                            <td class="action-buttons">
+
+                                <a href="#" class="btn btn-success"
+                                    onclick="handleAddStudent({{ student.user_id }}); return false;"
+                                    title="Add to course">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                                <script>
+                                    function handleAddStudent(studentId) {
+                                        const courseId = document.getElementById("course_id").value;
+
+                                        if (!courseId) {
+                                            alert("Select the course First!");
+                                            return;
+                                        }
+
+                                        const url = `/teacher/add_student_to_course/${studentId}/${courseId}/`;
+                                        window.location.href = url;
+                                    }
+                                </script>
+
+                                {% if selected_course_id %}
+                                    {% if student.user_id in course_students %}
+                                        <a href="{% url 'teacher:delete_student' student.user_id %}?course_id={{ selected_course_id }}" 
+                                        class="btn btn-delete"
+                                        onclick="return confirm('Are you sure you want to remove this student from the course?');">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">Not in course</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="text-muted">Choose a course first</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+
+
+                </table>
+            </div>
+            <div class="submit-btn d-flex justify-content-end">
+                <a href="{% url 'authentication:teacher_homepage' %}" class="btn-back">Back</a>
+
+            </div>
+
+
+        </div>
+    </main>
+    {% if form_success %}
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: "{{ form_success|escapejs }}",
+            showConfirmButton: false,
+            timer: 2500
+        });
+    </script>
+    {% endif %}
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+
+</html>

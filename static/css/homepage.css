@@ -1,0 +1,346 @@
+  :root {
+    --primary: #f25c05;
+    --secondary: #d9330a;
+    --light: #ffffff;
+    --dark: #333;
+    --gray-bg: #eaeaea;
+    --accent: #e53935;
+    --color-title: #d9330a;
+    }
+/* HEADER */
+.inner-head {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.inner-head .inner-logo img{
+    width: 100px;
+    height: auto;
+}
+
+
+.inner-logo img:hover {
+  transform: scale(1.05);
+}
+
+.inner-menu ul{
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 20px;
+}
+
+.inner-menu ul li{
+  margin: 0 15px;
+}
+
+.inner-menu ul li a{
+  position: relative;
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 8px 12px;
+  transition: color 0.3s ease;
+}
+
+.inner-menu ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.inner-menu ul li a:hover::after {
+    width: 100%;
+}
+
+.inner-menu ul li a:hover {
+    color: #ffd6b0; /* nhẹ nhàng, có thể dùng var(--light) hoặc màu sáng khác */
+}
+.auth-links {
+    display: flex;
+    gap: 12px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-links li a {
+    display: inline-block;
+    padding: 8px 16px;
+    color: #fff;
+    background-color: transparent;
+    border: 2px solid #fff;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.auth-links li a:hover {
+    background-color: #fff;
+    color: #f25c05;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+/* MAIN */
+.inner-title {
+  margin: 50px 0 30px;
+}
+
+.inner-title p {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--color-title);
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.display-4 {
+  color: #C2000C;
+  font-weight: bold;
+}
+.lead{
+  font-weight: bold;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  padding: 0 30px;
+  margin-bottom: 60px;
+}
+
+.card {
+  background: var(--gray-bg);
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card i {
+  font-size: 36px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.btn {
+  background-color: var(--accent);  /* #e53935 */
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.btn :hover{
+  background-color: white;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  transform: translateY(-3px);
+}
+
+.section-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--color-title); /* #d9330a */
+  position: relative;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+.section-title::after {
+  content: '';
+  width: 60%;
+  height: 4px;
+  background: var(--accent); /* #e53935 */
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.card h3 {
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.card p {
+  font-size: 14px;
+  color: #444;
+}
+
+.feature-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-color: var(--primary);
+}
+
+.feature-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.feature-card h5 {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.feature-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+
+/* FOOTER */
+.footer {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  color: white;
+  padding: 40px 0 20px;
+  max-width: 1140px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inner-part {
+  text-align: center; /* Căn giữa nội dung */
+  margin-bottom: 20px;
+}
+
+.inner-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.inner-title::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -5px;
+  width: 50px;
+  height: 2px;
+  background: white;
+}
+
+.inner-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.contact-list,
+.resource-list,
+.support-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa item */
+}
+
+.contact-list li,
+.resource-list li,
+.support-list li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.contact-list i,
+.resource-list i,
+.support-list i {
+  margin-right: 8px;
+  width: 20px;
+  text-align: center;
+}
+
+.resource-list a,
+.support-list a {
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.resource-list a:hover,
+.support-list a:hover {
+  color: #ffd6b0;
+  padding-left: 5px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center; /* Căn giữa icon */
+  gap: 15px;
+}
+
+.social-icons a {
+  color: white;
+  background: rgba(255,255,255,0.2);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  background: white;
+  color: var(--primary);
+  transform: translateY(-3px);
+}
+
+.copyright {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 20px;
+  font-size: 13px;
+  opacity: 0.8;
+  text-align: center;
+}

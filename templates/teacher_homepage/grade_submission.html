@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Grade Submission | PERL & PYTHON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/grade-submission.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                            <img src="{% static 'img/logo-removebg-preview.png' %}" alt="">
+                        </div>
+                        <div class="inner-menu collapse-menu">
+                            <ul>
+                                 <li>
+                                    <a href="{% url 'authentication:teacher_homepage' %}">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-mobile">
+                            <i class="fa-solid fa-bars"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Grade Section -->
+    <div class="section-main mt-4 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2 class="text-center mb-4">Grade Submission</h2>
+                    <div class="card shadow-sm p-4">
+                        <p><strong>ID:</strong> {{ submission.sub_id }}</p>
+                        <p><strong>Name:</strong> {{ submission.student.username }}</p>
+                        <p><strong>Assignment:</strong> {{ submission.assignment.title }}</p>
+                        <p><strong>Submitted At:</strong> {{ submission.submitted_at|date:"Y-m-d H:i" }}</p>
+                        <p><strong>File:</strong>
+                            {% if submission.file %}
+                                <a href="{{ submission.file.url }}" download>{{ submission.file.name|slice:"20:" }}</a>
+                            {% else %}
+                                No file
+                            {% endif %}
+                        </p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="point">Grade (point):</label>
+                                <input type="number" name="point" step="0.1" min="0" max="10" class="form-control" value="{{ submission.point }}">
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">Update Grade</button>
+                                <a href="/teacher/create-quiz/?lesson_id={{ lesson_id }}&assignment_id={{ assignment_id }}" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

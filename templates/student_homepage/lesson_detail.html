@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ lesson.title }} - Detail</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/lesson_detail.css' %}">
+
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+    h1, h2 { color: #333; }
+    .assignment { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>{{ lesson.title }}</h1>
+  <p><strong>Description:</strong> {{ lesson.description }}</p>
+  <p><strong>Content:</strong></p>
+  <pre>{{ lesson.content }}</pre>
+
+  <hr>
+
+  <h2>Assignments</h2>
+  {% if assignments %}
+    {% for assignment in assignments %}
+      <div class="assignment">
+        <h3>{{ assignment.title }}</h3>
+        <p><strong>Description:</strong> {{ assignment.description }}</p>
+        <p><strong>Content:</strong> {{ assignment.content }}</p>
+        <p><strong>Start:</strong> {{ assignment.start_date }} | <strong>Due:</strong> {{ assignment.due }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No assignments for this lesson.</p>
+  {% endif %}
+  
+<a href="{% url 'student:learning' %}">
+    <div class="back-btn-wrapper">
+        <button class="back-btn">BACK TO LIST</button>
+    </div>
+</a>
+
+</div>
+</body>
+</html>

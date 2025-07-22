@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/practice.css' %}?v={{ timestamp }}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <title>PRACTICE</title>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="inner-head">
+                        <div class="inner-logo">
+                            <img src="https://scontent-hkg1-2.xx.fbcdn.net/v/t1.15752-9/509617644_1412222906577794_4739279048360180404_n.png?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_ohc=93bp-KCXyKIQ7kNvwGfnJZD&_nc_oc=AdkReJIhOEZUQUi038njdwsrihij8JneijTW7hbgvPYz_XS_gyfgXAO1zEfPFwZGZKOk6KxENOV5l8ezFkdMVruG&_nc_zt=23&_nc_ht=scontent-hkg1-2.xx&oh=03_Q7cD2gGUg1JEd2OLigqSAUc9v_NRJzkax7WaNG01NkhIyoARKA&oe=688410C3" alt="Logo">
+                        </div>
+                        <div class="inner-menu">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'authentication:student_homepage' %}">HOME</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'ai:chatbot' %}">AI SUPPORTER</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'mainapp:aboutUs' %}">ABOUT US</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="inner-log">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'mainapp:profile' %}">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'authentication:signout' %}">Log out</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-5 text-center">
+        <div style="text-align: left;">
+            <a href="{% url 'mainapp:back' %}" class="back-btn">← Back</a>
+        </div>
+        <h1 class="section-title">PRACTICE</h1>
+    </div>
+    {% if messages %}
+        <div class="container">
+            <ul class="messages alert alert-success">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <!-- Menu Mobile -->
+    <section class="lecture-list">
+        <div class="container">
+            <div class="table-container">
+            <!-- CHỌN LỚP / CHƯƠNG / BÀI -->
+                <div class="inner-select">
+                    <div class="inner-choose">
+                        <p>Course-Subject:</p>
+                        <select name="course_sub" id="course-sub-select">
+                            {% for cs in course_subjects %}
+                                <option value="{{ cs.course_sub_id }}">{{ cs.subject.name }}</option>
+                            {% endfor %}
+                        </select>                    
+                    </div>
+                    <div class="inner-choose">
+                        <p>Lesson:</p>
+                        <select name="lesson" id="lesson-select">
+                            {% for lesson in lessons %}
+                                <option value="{{ lesson.lesson_id }}">{{ lesson.title }}</option>
+                            {% endfor %}
+                        </select>                    
+                    </div>
+                </div>
+
+            <!-- NÚT SEARCH -->
+                <div class="button">
+                    <button class="find" type="button">Search</button>
+                </div>
+
+            <!-- TOPIC -->
+                <div class="inner-topic">
+                    <p>Topic:</p>
+                    <input type="text" id="topic-input" readonly>
+                </div>
+
+            <!-- CONTENT -->
+                <div class="inner-content">
+                    <p>Content:</p>
+                    <input type="text" id="content-input" readonly>
+                </div>
+
+                <div id="file-download-section" style="margin-top: 15px; display: none;">
+                    <p>Attachment:</p>
+                    <a id="file-download-link" href="#" target="_blank" class="btn btn-sm btn-primary">
+                        📥 Tải file đính kèm
+                    </a>
+                </div>
+
+            <!-- SUBMIT -->
+                <form class="inner-submit" id="submission-form" action="{% url 'student:submit_assignment' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="lesson_id" id="form-lesson-id">
+                    
+                    <div class="box-submit">
+                        <p>Submit your file:</p>
+                        <input type="file" name="file" required>
+                    </div>
+
+                    <button class="submit-btn" type="submit">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="inner-content">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">ABOUT US</p>
+                            <p class="inner-desc">
+                                AI-integrated programming learning system for Perl & Python.
+                                Developed by CS466 group - Duy Tan University.
+                            </p>
+                            <div class="social-icons mt-3">
+                                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">CONTACT</p>
+                            <ul class="contact-list">
+                                <li><i class="fas fa-map-marker-alt"></i> 128 Hoang Minh Thao</li>
+                                <li><i class="fas fa-phone"></i> (024) 3869 4242</li>
+                                <li><i class="fas fa-envelope"></i> support@perlpython.edu.vn</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">RESOURCES</p>
+                            <ul class="resource-list">
+                                <li><a href="#"><i class="fas fa-book"></i> Study materials</a></li>
+                                <li><a href="#"><i class="fas fa-code"></i> Sample exercises</a></li>
+                                <li><a href="#"><i class="fas fa-video"></i> Lecture videos</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <div class="inner-part">
+                            <p class="inner-title">SUPPORT</p>
+                            <ul class="support-list">
+                                <li><a href="#"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                                <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                                <li><a href="#"><i class="fas fa-file-alt"></i> Terms of Use</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="copyright text-center mt-4">
+                    <p>© 2023 AI-Integrated Learning System. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    document.querySelector('.find').addEventListener('click', function () {
+        const lessonId = document.getElementById('lesson-select').value;
+        const courseSubId = document.getElementById('course-sub-select').value;
+
+        console.log("lessonId:", lessonId);
+        console.log("courseSubId:", courseSubId);
+
+        if (!lessonId || !courseSubId) {
+            alert("Please select full Lesson and Course-Subject.");
+            return;
+        }
+
+        fetch(`/student/get_lesson_content/?lesson_id=${lessonId}&course_sub_id=${courseSubId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data received:", data);
+                if (data.topic && data.content) {
+                    document.getElementById('topic-input').value = data.topic;
+                    document.getElementById('content-input').value = data.content;
+
+                    // 👇 Xử lý file đính kèm (nếu có)
+                    if (data.file_url) {
+                        const fileSection = document.getElementById('file-download-section');
+                        const fileLink = document.getElementById('file-download-link');
+                        fileLink.href = data.file_url;
+                        fileSection.style.display = 'block';
+                    } else {
+                        document.getElementById('file-download-section').style.display = 'none';
+                    }
+
+                } else {
+                    alert("Lesson content not found.");
+                    document.getElementById('file-download-section').style.display = 'none'; // Ẩn luôn
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred while loading data: " + error.message);
+            });
+    });
+
+    document.getElementById('course-sub-select').addEventListener('change', function () {
+        const courseSubId = this.value;
+
+        fetch(`/student/get_lessons_by_course_sub/?course_sub_id=${courseSubId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const lessonSelect = document.getElementById('lesson-select');
+                lessonSelect.innerHTML = '';  
+
+                if (data.lessons && data.lessons.length > 0) {
+                    data.lessons.forEach(lesson => {
+                        const option = document.createElement('option');
+                        option.value = lesson.lesson_id;
+                        option.text = lesson.title;
+                        lessonSelect.appendChild(option);
+                    });
+                } else {
+                    const option = document.createElement('option');
+                    option.value = '';
+                    option.text = 'No lessons available';
+                    lessonSelect.appendChild(option);
+                }
+            })
+            .catch(error => {
+                console.error('Error loading lessons:', error);
+            });
+    });
+
+    document.getElementById('lesson-select').addEventListener('change', function () {
+        document.getElementById('form-lesson-id').value = this.value;
+    });
+
+    document.getElementById('form-lesson-id').value = document.getElementById('lesson-select').value;
+    </script>

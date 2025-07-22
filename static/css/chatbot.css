@@ -1,0 +1,237 @@
+:root {
+    --font-1: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --bg-1: #f7f7f7;
+    --color-text: #222;
+    --color-title: #d62828;
+    --primary: #007bff;
+    --user-bubble-bg: #e0f2fe;
+    --user-bubble-text: #222;
+    --bot-bubble-bg: #f5f5f5;
+    --bot-bubble-text: #222;
+}
+
+body {
+    font-family: var(--font-1);
+    background: var(--bg-1);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+    padding: 0 0 24px 0;
+}
+.chat-box {
+    padding: 24px 32px 0 32px;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Sửa lại phần message container */
+.message {
+    display: flex;
+    margin-bottom: 16px;
+    max-width: 100%;
+}
+
+/* User message sửa lại */
+.user-message {
+    justify-content: flex-end;
+    margin-bottom: 6px;
+    animation: fadeInRight 0.4s ease;
+}
+
+/* Bot message sửa lại */
+.bot-message {
+    justify-content: flex-start;
+    animation: fadeInLeft 0.4s ease;
+}
+
+/* Avatar cố định */
+.avatar-user, .avatar-bot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0e7ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #222;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    flex-shrink: 0;
+    margin: 0 8px 0 0; /* Chỉ margin bên phải */
+}
+
+.user-message .avatar-user {
+    margin: 0 0 0 8px; /* Avatar user margin bên trái */
+    order: 1; /* Đưa avatar sang phải */
+}
+
+/* Bubble sửa lại */
+.bubble {
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 1rem;
+    line-height: 1.7;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+    word-break: break-word;
+    max-width: fit-content;
+    transition: all 0.3s ease;
+}
+.bubble:hover {
+    transform: scale(1.008);
+}
+
+.user-bubble {
+    background: var(--user-bubble-bg);
+    color: var(--user-bubble-text);
+    border-radius: 14px 14px 4px 14px;
+    margin-left: 0;
+    max-width: 85%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.bot-bubble {
+    background: var(--bot-bubble-bg);
+    color: var(--bot-bubble-text);
+    border-radius: 14px 14px 14px 4px;
+    margin-right: 0;
+    max-width: 85%;
+}
+.timestamp {
+    font-size: 0.7em;
+    color: #888;
+    margin-top: 4px;
+    padding-left: 8px;
+}
+
+.user-time {
+    text-align: right;
+    padding-right: 8px;
+}
+
+.bot-time {
+    text-align: left;
+    padding-left: 8px;
+}
+
+/* Phần còn lại giữ nguyên */
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Các phần khác giữ nguyên */
+h2 {
+    color: var(--color-title);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.back-button {
+    background-color: #f4a261;
+    color: #fff !important; /* Trắng là màu chữ phù hợp nhất trên nền cam nhạt */
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    width: fit-content;
+    cursor: pointer;
+    transition: background-color 0.2s ease; 
+}
+
+.back-button:hover {
+    background-color: #d98642; /* darken primary */
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+.chat-form {
+    margin: 18px 32px 0 32px;
+}
+
+.chat-input {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-size: 16px;
+    background: #f9fafb;
+    color: #222;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #F1751D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #d45d13;
+}
+
+.clear-form {
+    text-align: center;
+    margin: 10px 0 0 0;
+}
+
+/* Định dạng code block */
+.bot-bubble pre, .bot-bubble code {
+    background: #23272f !important;
+    color: #f8f8f2 !important;
+    border-radius: 6px;
+    padding: 15px;
+    font-size: 14px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    margin-top: 5px;
+    box-sizing: border-box;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    display: block;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .container, .chat-box {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .container {
+        border-radius: 0;
+        margin: 0;
+    }
+    .bubble {
+        max-width: 90%;
+    }
+}
