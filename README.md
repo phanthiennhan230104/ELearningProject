@@ -10,14 +10,18 @@
 - ⚙️ Trang quản trị: Quản lý người dùng, khóa học, môn học
 
 ## ⚙️ Yêu cầu hệ thống (pip install ...)
-Django==5.2.3
-mysqlclient==2.2.7         # Hoặc dùng PyMySQL nếu không cài được mysqlclient
-python-dotenv==1.0.1        # Đọc biến môi trường từ .env
-django-widget-tweaks==1.5.0 # Tùy chỉnh form HTML
-requests==2.32.3
-pillow==11.1.0              # Xử lý ảnh (nếu có upload ảnh)
-openai==1.90.0
-groq==0.29.0
+Python >= 3.8
+MySQL >= 5.7
+pip install Django==5.2.3
+pip install mysqlclient==2.2.7         # Hoặc: pip install PyMySQL
+pip install python-dotenv==1.0.1        # Đọc biến môi trường từ .env
+pip install django-widget-tweaks==1.5.0 # Tuỳ chỉnh form HTML
+pip install requests==2.32.3
+pip install pillow==11.1.0              # Xử lý ảnh (nếu có upload ảnh)
+pip install openai==1.90.0
+pip install groq==0.29.0
+🔁 Hoặc dùng file requirements.txt:
+pip install -r requirements.txt
 
 ## 🛠️ Cài đặt và chạy hệ thống
 git clone https://github.com/phanthiennhan230104/ELearningProject.git hoặc unzip file đã gửi ở trên sakai đã nộp ( giảng viên môn CS466 )
@@ -44,38 +48,46 @@ DATABASES = {
 | Sinh viên     | hs1      | hs2004       |
 
 ## 📁 Cấu trúc thư mục
-  pythonproject/
-  ├── admin/                       # Chức năng cho admin
-  ├── ai/                          # Module xử lý AI / Chatbot
-  ├── authentication/              # Đăng nhập, đăng ký, phân quyền
-  ├── database/
-  │   └── elearning.sql            # File tạo cơ sở dữ liệu
-  ├── mainapp/                     # Chức năng khác (Profile, About Us,...)
-  ├── media/
-  │   ├── assignments/             # Bài tập đã giao bởi giảng viên
-  │   └── submissions/             # Bài làm của sinh viên
-  ├── newelearning/                # Cấu hình Django
-  │   ├── __init__.py
-  │   ├── asgi.py
-  │   ├── settings.py
-  │   ├── urls.py
-  │   └── wsgi.py
-  ├── static/
-  │   ├── css/
-  │   └── img/
-  ├── student/                     # Chức năng cho sinh viên
-  ├── teacher/                     # Chức năng cho giảng viên
-  ├── templates/
-  │   ├── admin_homepage/
-  │   ├── AI/
-  │   ├── authentication_homepage/
-  │   ├── mainapp/
-  │   ├── student_homepage/
-  │   └── teacher_homepage/
-  ├── .env                         # Biến môi trường (KHÔNG push lên Git)
-  ├── .gitignore
-  ├── manage.py
-  ├── requirements.txt             # pip install -r requirements.txt
+pythonproject/
+├── admin/                    # Chức năng cho admin
+├── ai/                       # Module xử lý AI / Chatbot
+├── authentication/          # Đăng nhập, đăng ký, phân quyền
+├── database/
+│   └── elearning.sql         # File tạo CSDL
+├── mainapp/                 # Ứng dụng chính
+│   ├── migrations/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── media/
+│   ├── assignments/         # Bài tập giao
+│   └── submissions/         # Bài làm của sinh viên
+├── newelearning/            # Cấu hình Django
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── static/
+│   ├── css/
+│   └── img/
+├── student/                 # Chức năng cho sinh viên
+├── teacher/                 # Chức năng cho giảng viên
+├── templates/
+│   ├── admin_homepage/
+│   ├── AI/
+│   ├── authentication_homepage/
+│   ├── mainapp/
+│   ├── student_homepage/
+│   └── teacher_homepage/
+├── .env                     # Biến môi trường (KHÔNG push lên GitHub)
+├── .gitignore
+├── manage.py
+├── requirements.txt
 
 ## RUN SERVER
 python manage.py runserver
