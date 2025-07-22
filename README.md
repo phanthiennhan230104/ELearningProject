@@ -25,11 +25,12 @@ pip install groq==0.29.0</pre>
 pip install -r requirements.txt
 
 ## 🛠️ Cài đặt và chạy hệ thống
+<pre>
 git clone https://github.com/phanthiennhan230104/ELearningProject.git hoặc unzip file đã gửi ở trên sakai đã nộp ( giảng viên môn CS466 )
 pip install -r requirements.txt
 Xử lí để kết nối database MySQL:
 - import file elearning.sql trong Folder database
-- Mở file settings.py và chỉnh cấu hình: ( ở USER và PASSWORD chỉnh sửa theo MySQL của máy)
+- Mở file settings.py và chỉnh cấu hình: ( ở USER và PASSWORD chỉnh sửa theo MySQL của máy)</pre>
 <pre>
 DATABASES = {
     'default': {
